@@ -16,7 +16,7 @@
 
 #pragma mark - Managing the detail item
 
-- (void)setDetailItem:(id)newDetailItem {
+- (void)setDetailItem:(NSDictionary *)newDetailItem {
     if (_detailItem != newDetailItem) {
         _detailItem = newDetailItem;
         // Update the view.
@@ -27,8 +27,17 @@
 - (void)configureView {
     // Update the user interface for the detail item.
     if (self.detailItem) {
-        self.detailDescriptionLabel.text = [self.detailItem description];
+        self.detailDescriptionLabel.text = [self.detailItem allKeys][0];
     }
+    NetworkCommunicator *nc = [[NetworkCommunicator alloc] initWithUrl:[self.detailItem allValues][0] withParams:nil];
+    [nc getArticlesFromSource:^(NSData *data, NSError *error) {
+        if(error) {
+            NSLog(@"got error");
+        } else {
+            NSLog(@"got response");
+        }
+    }];
+  
 }
 
 - (void)viewDidLoad {

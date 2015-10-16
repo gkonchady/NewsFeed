@@ -45,7 +45,11 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         FeedViewController *controller = (FeedViewController *)[[segue destinationViewController]
           topViewController];
-        [controller setDetailItem:[self.contents objectAtIndex:indexPath.row]];
+        NSString *key = [self.contents objectAtIndex:indexPath.row];
+        NSDictionary *detailDict = @{
+            key:[self.objects objectForKey:key]
+        };
+        [controller setDetailItem:detailDict];
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
     }
